@@ -1,7 +1,7 @@
 # JellFo-Client
 젤리 리뷰 프로젝트
 
-## 요구사항
+## 요구사항 정의서
 
 <table>
     <tr>
