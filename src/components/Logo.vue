@@ -57,7 +57,6 @@ font: 16vw/0.65 "Dongle", "Kaushan Script", Futura, "Roboto", "Trebuchet MS", He
   height: 100%;
   width: 100%;
   position: absolute;
-  /* background: red; */
   top: 22%;
   left: -1%;
   color: white;
