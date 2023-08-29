@@ -2,12 +2,23 @@
   <div class="content">
     <div class="firstCircle"></div>
     <div class="secondCircle"></div>
-    <div class="cardBox"></div>
+    <div class="cardBox" v-if='$store.state.inputData == ""'>
+      <Card />
+    </div>
+    <div class="cardBox" v-else>
+      
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import Card from '@/components/Card.vue';
+
+export default {
+  components : {
+    Card : Card
+  }
+};
 </script>
 
 <style scoped>
@@ -53,6 +64,6 @@ export default {};
   height: 70%;
   background: #fb82b1;
   border-radius: 41px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 </style>
