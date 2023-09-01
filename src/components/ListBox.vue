@@ -2,21 +2,18 @@
   <div class="content">
     <div class="firstCircle"></div>
     <div class="secondCircle"></div>
-    <div class="cardBox" v-if='$store.state.inputData == ""'>
-      <Card />
-    </div>
-    <div class="cardBox" v-else>
-      
+    <div class="cardBox">
+      <Swiper />
     </div>
   </div>
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
+import Swiper from '@/components/Swiper.vue';
 
 export default {
   components : {
-    Card : Card
+    Swiper : Swiper
   }
 };
 </script>
