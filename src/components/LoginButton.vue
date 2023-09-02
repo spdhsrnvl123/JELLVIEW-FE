@@ -17,13 +17,14 @@ export default {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         transition : all 0.4s;
         background: rgba(0, 163, 255, 0.2);
-        padding : 0.6em 0.7em;
-        font-size: 2vw;
+        padding : 0.3em 0.7em;
+        font-size: 2.4vw;
         cursor: pointer;
     }
     .loginBox{
         position: absolute;
         right: 4%;
         top:4%;
+        z-index: 100;
     }
 </style>

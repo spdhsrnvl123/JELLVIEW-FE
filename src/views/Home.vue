@@ -24,8 +24,11 @@ import Balloon from "@/components/Balloon.vue"
 export default {
 	data(){
 		return{
-			modalStatus : false
+			modalStatus : false,
 		}
+	},
+	created(){
+	    this.$store.dispatch('getData');
 	},
 	components : {
     LoginButton: LoginButton,
@@ -35,7 +38,7 @@ export default {
 	Nav : Nav,
 	Input : Input,
 	Balloon : Balloon
-}
+	}
 }
 </script>
 

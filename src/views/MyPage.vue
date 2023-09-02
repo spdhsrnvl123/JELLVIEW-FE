@@ -1,10 +1,10 @@
 <template>
-  mypage
+  <Logo />
 </template>
 
 <script>
 export default {
-
+  
 }
 </script>
 
