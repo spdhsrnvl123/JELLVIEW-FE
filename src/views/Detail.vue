@@ -16,9 +16,9 @@
               <div>당류 : {{ $store.state?.jelly[currentURL.id]?.jsugars }}g</div>
               <div>단백질 : {{ $store.state?.jelly[currentURL.id]?.jprotein }}g</div>
               <div>나트륨 : {{ $store.state?.jelly[currentURL.id]?.jsalt }}mg</div>
-              <button class="reviewButton">{{ $store.state?.jelly[currentURL.id]?.jname }}<br /> 후기 작성하기</button>
+              <button @click="$router.push('/review')" class="reviewButton">{{ $store.state?.jelly[currentURL.id]?.jname }}<br /> 후기 작성하기</button>
             </div>
-            <img class="yellow" src="../assets/yellow.png" />
+            <img class="yellowII" src="../assets/yellow.png" />
           </div>
         <button @click="closeModal" class="modalButton">&times;</button>
     </section>
@@ -131,7 +131,7 @@ export default {
     font-size: 3vw;
   }
 
-  .content .yellow{
+  .content .yellowII{
     width: 13vw;
     height: 20vw;
     z-index: 9999;
@@ -153,6 +153,9 @@ export default {
         position : absolute;
         top:60%;
         left:48%;
+        transition: all 0.1s;
   }
-
+  .reviewButton:hover{
+    background: #20a3d7;
+  }
 </style>

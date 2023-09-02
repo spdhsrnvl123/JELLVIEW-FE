@@ -1,15 +1,15 @@
 <template>
   <ul class="menuBox">
-    <li>홈</li>
-    <li>JellFo소개</li>
-    <li>리뷰 작성하기</li>
-    <li>마이페이지</li>
+    <li @click="$router.push('/home')">홈</li>
+    <li @click="$router.push('/reviewlist')">리뷰 보기</li>
+    <li @click="$router.push('/review')">리뷰 작성하기</li>
+    <li @click="$router.push('/mypage')">마이페이지</li>
   </ul>
 </template>
 
 <script>
 export default {
-    name : "Nav"
+    name : "Nav",
 }
 </script>
 
@@ -20,16 +20,15 @@ export default {
         align-items: center;
     }
     .menuBox li{
-        font-size: 48px;
+        /* font-size: 48px; */
+        font-size: 3vw;
         font-weight: 700;
-        padding-left: 51px;
-        padding: 20px 48px;
-        text-shadow: 3px 3px 1px #d0d2cf;
+        text-align: center;
+        margin: 20px 38px;
+        text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
         cursor: pointer;
+        padding: 20px;
         transition: all 0.2s;
-    }
-    .menuBox li:nth-child(1){
-        color : #00A3FF;
     }
     .menuBox li:hover{
         transform: scale(1.2);

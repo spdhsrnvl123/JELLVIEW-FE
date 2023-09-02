@@ -2,6 +2,10 @@
   <div class="modalContainer" v-if="modalStatus == true">
     <div class="modalSection">
       <button @click="$emit('closeModal')" class="closeModal">&times;</button>
+      <img class="yellow" src="@/assets/yellow.png" />
+      <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e83ad4f76c812b501942955e9bd1f59a&redirect_uri=http://localhost:8001/auth/kakao/callback">
+        <img class="kakaoLoginButton" src="@/assets/kakao_login_button.png" />
+      </a>
     </div>
   </div>
 </template>
@@ -39,6 +43,23 @@ export default {
   border-radius: 50px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   overflow-y: auto;
+}
+.modalSection .yellow{
+  width: 13vw;
+  height: 20vw;
+  position: absolute;
+  top:40%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.modalSection .kakaoLoginButton{
+    position: absolute;
+      width: 19vw;
+  height: 5vw;
+  bottom:5%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  cursor: pointer;
 }
 .closeModal{
     position: absolute;

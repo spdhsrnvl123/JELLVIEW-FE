@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button @click="$router.push('/home')">
     <div className="stage">
       <div className="layer"></div>
       <div className="layer"></div>
