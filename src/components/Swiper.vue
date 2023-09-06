@@ -24,21 +24,38 @@
       </div>
     </swiper-slide>
   </swiper>
-  <Swiper v-else>
-    <swiper-slide>
-      <div class="imgBox" v-if="$store.state.outputData[0] !== undefined">
-        <img class="real" :src="$store.state.outputData[0]?.jimg" />
+  <swiper 
+    :spaceBetween="30"
+    :centeredSlides="true"
+    :autoplay="{
+      delay: 2500,
+      disableOnInteraction: false,
+    }"
+    :pagination="{
+      clickable: true,
+    }"
+    :navigation="true"
+    :modules="modules"
+    class="mySwiper">
+    <swiper-slide v-for="(a, i) in $store.state.outputData" :key="i">
+       <!-- v-if="outputData == []" -->
+      <div class="imgBox">
+        <img class="real" :src="a.jimg" />
         <div class="cardContent">
-          <h1>{{ $store.state.outputData[0]?.jname }}</h1>
-          <button @click="openModal($store.state.outputData[0].jidx -101)">상세보기</button>
+          <h1>{{ a.jname }}</h1>
+          <button @click="openModal(i)">상세보기</button>
         </div>
       </div>
-      <div class="imgBox" v-else>
-        <h2>정확히 입력해주셔야 돼유ㅠㅠ</h2>
+    </swiper-slide>
+  </swiper>
+  <!-- <swiper v-else="true">
+      <swiper-slide >
+      <div class="imgBox">
+        <h2>다시 입력해주셔야 돼유ㅠㅠ</h2>
         <span>젤리이름 : 골드베렌, 스타믹스, 해피콜라, 웜스, 부시, 웜스 자우어, 해피콜라 자우어, 해피콜라 그랩스</span>
       </div>
     </swiper-slide>
-  </Swiper>
+  </swiper> -->
 </template>
 <script>
 // Import Swiper Vue.js components

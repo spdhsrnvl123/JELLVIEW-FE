@@ -7,6 +7,7 @@ export default createStore({
     inputData: "",
     review: [],
     outputData: [],
+    bool : false
   },
   mutations: {
     setData(state, data) {
@@ -14,9 +15,18 @@ export default createStore({
     },
     setInputData(state, data) {
       state.inputData = data; //data는 검색창에 입력한 데이터값이다.
-      state.outputData = state.jelly.filter((v) => {
-        return v.jname == data;
+      state.outputData = [];
+      state.jelly.filter((v) => {
+        if (state.inputData === "") {
+          state.outputData.push(v);
+        } else if (v.jname.includes(state.inputData)) {
+          state.bool = false;
+          state.outputData.push(v);
+        } else{
+          state.bool = true;
+        }
       });
+      console.log(state.outputData);
     },
     setReviewData(state, data) {
       data = data.sort((a, b) => {
