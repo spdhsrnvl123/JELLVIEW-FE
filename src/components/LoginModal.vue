@@ -3,9 +3,9 @@
     <div class="modalSection">
       <button @click="$emit('closeModal')" class="closeModal">&times;</button>
       <img class="yellow" src="@/assets/yellow.png" />
-      <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e83ad4f76c812b501942955e9bd1f59a&redirect_uri=http://localhost:8001/auth/kakao/callback">
+      <button @click="kakaoButton">
         <img class="kakaoLoginButton" src="@/assets/kakao_login_button.png" />
-      </a>
+      </button>
     </div>
   </div>
 </template>
@@ -15,6 +15,13 @@ export default {
   name: "LoginModal",
   props : {
     modalStatus : Boolean
+  },
+  methods : {
+    kakaoButton(){
+    window.open(
+        `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e83ad4f76c812b501942955e9bd1f59a&redirect_uri=http://localhost:5001/auth/kakao/callback`
+        ,"_self")
+    }
   }
 }
 </script>
