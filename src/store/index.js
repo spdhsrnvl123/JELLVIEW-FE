@@ -6,8 +6,10 @@ export default createStore({
     jelly: [],
     inputData: "",
     review: [],
+    myReview : [],
     outputData: [],
-    bool : false
+    bool: false,
+    userInfo: {},
   },
   mutations: {
     setData(state, data) {
@@ -22,7 +24,7 @@ export default createStore({
         } else if (v.jname.includes(state.inputData)) {
           state.bool = false;
           state.outputData.push(v);
-        } else{
+        } else {
           state.bool = true;
         }
       });
@@ -34,10 +36,21 @@ export default createStore({
       });
       state.review = data;
     },
+    setMyReviewData(state, data) {
+      data = data.sort((a, b) => {
+        return b.ridx - a.ridx;
+      });
+      state.myReview = data;
+    },
+    //유저정보 셋팅
+    setUserInfo(state, data) {
+      state.userInfo = data;
+    },
   },
   actions: {
-    getData(context) {
-      axios
+    //젤리 정보 받아오기
+    async getData(context) {
+      await axios
         .get("http://localhost:8001/jellies")
         .then((response) => {
           console.log(response.data.result);
@@ -47,8 +60,9 @@ export default createStore({
           console.log(error);
         });
     },
-    getReviewData(context) {
-      axios
+    //리뷰 정보 받아오기
+    async getReviewData(context) {
+      await axios
         .get("http://localhost:8001/review")
         .then((response) => {
           // console.log(response.data)
@@ -58,6 +72,20 @@ export default createStore({
           console.log(error);
         });
     },
+    //나의 리뷰 정보 받아오기
+    getMyReviewData(context,email) {
+      // console.log(email)
+      axios
+        .get(`http://localhost:8001/review/${email}`)
+        .then((response) => {
+          console.log(response.data)
+          context.commit("setMyReviewData", response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    //리뷰 삭제 하기
     deleteReviewData(context, id) {
       axios
         .delete(`http://localhost:8001/delete?id=${id}`)
@@ -66,6 +94,22 @@ export default createStore({
         })
         .catch((error) => {
           console.log(error);
+        });
+    },
+    // 유저 정보 받아오기
+    getUserData(context, token) {
+      console.log(token);
+      axios({
+        method: "GET",
+        url: `http://localhost:8001/auth/kakao/user?token=${token}`,
+      })
+        .then((res) => {
+          console.log(res.data);
+          context.dispatch("getMyReviewData",res.data.email);
+          context.commit("setUserInfo", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
   },

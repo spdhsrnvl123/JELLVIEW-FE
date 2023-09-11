@@ -2,14 +2,23 @@
   <ul class="menuBox">
     <li @click="$router.push('/home')">홈</li>
     <li @click="$router.push('/reviewlist')">리뷰 보기</li>
-    <li @click="$router.push('/review')">리뷰 작성하기</li>
-    <li @click="$router.push('/mypage')">마이페이지</li>
+    <li @click="useAuth('/review')">리뷰 작성하기</li>
+    <li @click="useAuth('/mypage')">마이페이지</li>
   </ul>
 </template>
 
 <script>
 export default {
     name : "Nav",
+    methods : {
+        useAuth(path){
+            if (localStorage.getItem("token")) {
+                this.$router.push(path)
+            } else {
+                alert("로그인해주세요!")
+            }
+        }
+    }
 }
 </script>
 
@@ -21,7 +30,7 @@ export default {
     }
     .menuBox li{
         /* font-size: 48px; */
-        font-size: 3vw;
+        font-size: 3.4vw;
         font-weight: 700;
         text-align: center;
         margin: 20px 38px;

@@ -2,6 +2,8 @@
   <div class="modalContainer">
     <section class="modalSection">
         <div class="content">
+        <Balloon />
+
             <div class="imgBox">
                 <img :src="$store.state?.jelly[currentURL.id]?.jimg" />
             </div>
@@ -16,7 +18,7 @@
               <div>당류 : {{ $store.state?.jelly[currentURL.id]?.jsugars }}g</div>
               <div>단백질 : {{ $store.state?.jelly[currentURL.id]?.jprotein }}g</div>
               <div>나트륨 : {{ $store.state?.jelly[currentURL.id]?.jsalt }}mg</div>
-              <button @click="$router.push('/review')" class="reviewButton">{{ $store.state?.jelly[currentURL.id]?.jname }}<br /> 후기 작성하기</button>
+              <button @click="useAuth('/review')" class="reviewButton">후기 작성하기</button>
             </div>
             <img class="yellowII" src="../assets/yellow.png" />
           </div>
@@ -26,22 +28,31 @@
 </template>
 
 <script>
+import Balloon from '@/components/Balloon.vue';
+
 
 export default {
-  methods : {
-    closeModal(){
-      this.$router.push('/home')
-    }
-  },
-  computed : {
-      currentURL(){
-    return this.$route.params
-  },
-  },
-  	created(){
-	    this.$store.dispatch('getData');
-	},
-  
+    methods: {
+        closeModal() {
+            this.$router.push('/home');
+        },
+                useAuth(path){
+            if (localStorage.getItem("token")) {
+                this.$router.push(path)
+            } else {
+                alert("로그인해주세요!")
+            }
+        }
+    },
+    computed: {
+        currentURL() {
+            return this.$route.params;
+        },
+    },
+    created() {
+        this.$store.dispatch('getData');
+    },
+    components: { Balloon }
 }
 </script>
 
@@ -145,17 +156,17 @@ export default {
     background: #16f916;
     padding : 3px 4px;
     font-weight: 600;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
     width: 14%;
     border: 0;
         cursor: pointer;
         position : absolute;
-        top:60%;
-        left:48%;
+        bottom:2%;
+        left:16%;
         transition: all 0.1s;
   }
   .reviewButton:hover{
-    background: #20a3d7;
+    background: #afc6e7;
   }
 </style>

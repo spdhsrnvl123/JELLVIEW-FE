@@ -10,8 +10,8 @@
   <img class="balloonBundle2" src="@/assets/balloon.png" />
   <div class="mainContent">
     <ul class="listBox">
-      <li v-for="(review, i) in this.$store.state.review" :key="i">
-        <Card :review="review" :jelly2="$store.state.jelly" />
+      <li v-for="(review, i) in $store.state.myReview" :key="i">
+        <Card :review="review" :bool="bool"  />
       </li>
     </ul>
   </div>
@@ -25,12 +25,15 @@ import Nav from "@/components/Nav.vue";
 
 export default {
   components: { Header, Nav, Balloon, Card },
+  data(){
+    return{
+      bool : true,
+    }
+  },
   created() {
-    this.$store.dispatch("getData").then(
-      ()=>{
-        this.$store.dispatch("getReviewData");
-      }
-    );
+    let token = localStorage.getItem("token");
+    this.$store.dispatch("getUserData",token);
+    this.$store.dispatch("getData"); 
   },
   methods: {
     useAuth(path) {

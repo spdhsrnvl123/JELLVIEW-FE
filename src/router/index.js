@@ -28,10 +28,20 @@ const routes = [
     component: () => import("../views/ReviewList.vue"),
   },
   {
+    path: "/myreview",
+    name: "MyReview",
+    component: () => import("../views/MyReview.vue"),
+  },
+  {
     path: "/mypage",
     name: "MyPage",
     component: () => import("../views/MyPage.vue"),
-  }
+  },
+  {
+    path: "/auth/kakao/callback",
+    name: "KakaoRedirect",
+    component: () => import("../views/KakaoRedirect.vue"),
+  },
 ];
 
 const router = createRouter({

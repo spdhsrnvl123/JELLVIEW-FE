@@ -29,7 +29,6 @@
       <textarea maxlength="300" v-model="content" placeholder="내용을 입력해주세요!" />
       <button type="submit">리뷰작성</button>
     </form>
-    <!-- <button @click="dataSubmit">테스트</button> -->
   </div>
 </template>
 
@@ -49,6 +48,10 @@ export default {
         content : '',
     };
   },
+  created(){
+    let token = localStorage.getItem("token");
+    this.$store.dispatch("getUserData",token);
+  },
   methods: {
     dataSubmit(e) {
       axios
@@ -57,8 +60,8 @@ export default {
             content : this.content,
             jidx : this.jidx,
             star : this.star,
-            date : 
-            new Date()
+            // Created_at : new Date(),
+            email : this.$store.state.userInfo.email
         })
         .then((response) => {
           console.log(response);

@@ -36,6 +36,8 @@
     }"
     :navigation="true"
     :modules="modules"
+    v-if="$store.state.inputData != ''"
+  >
     class="mySwiper">
     <swiper-slide v-for="(a, i) in $store.state.outputData" :key="i">
        <!-- v-if="outputData == []" -->
