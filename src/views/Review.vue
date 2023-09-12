@@ -8,10 +8,11 @@
         <input v-model="title" type="text" placeholder="제목을 입력해주세요!" />
         <span>젤리선택</span>
         <select v-model="jidx">
+          <!-- <option v-for="a in $store.state.jelly"></option> -->
           <option value=101>골드베렌</option>
           <option value=102>스타믹스</option>
-          <option value=103>웜스</option>
-          <option value=104>해피콜라</option>
+          <option value=103>해피콜라</option>
+          <option value=104>웜스</option>
           <option value=105>부시</option>
           <option value=106>웜스 자우어</option>
           <option value=107>해피콜라 자우어</option>
@@ -51,6 +52,12 @@ export default {
   created(){
     let token = localStorage.getItem("token");
     this.$store.dispatch("getUserData",token);
+    this.$store.dispatch('getData');
+    
+    //상세페이지 
+    if(this.$route.query.key != undefined){
+      this.jidx = this.$route.query.key
+    }
   },
   methods: {
     dataSubmit(e) {
