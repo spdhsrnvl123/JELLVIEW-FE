@@ -35,7 +35,9 @@
         placeholder="내용을 입력해주세요!"
       />
     </h1>
-    <div class="buttonBox" v-if="bool == true">
+    <h1 class="content">작성자 : {{ review.email }}</h1>
+    <!-- {{ $store.state.userInfo.email }} -->
+ <div class="buttonBox" v-if="$store.state.userInfo.email == review.email">
       <button v-if="editBool == false" @click="editBool = true">수정</button>
       <button v-if="editBool == true" @click="editHandler(review.ridx)">수정완료</button>
       <button v-if="editBool == false" @click="deleteHander(review.ridx)">삭제</button>
@@ -64,22 +66,21 @@ export default {
     bool: Boolean,
   },
   created(){
+        let token = localStorage.getItem("token");
+    this.$store.dispatch("getUserData", token);
       let a = this.$store.state?.jelly.filter((v)=>{
       return this.review.jidx == v.jidx
     });
-    // console.log('a0:'+a[0]);
-    // console.log(a[0].jname);
-    this.name = a[0].jname;
+    this.name = a[0]?.jname;
   },
   methods: {
     deleteHander(ridx) {
       if (confirm("작성한 후기를 삭제하시겠습니까?")) {
         this.$store.dispatch("deleteReviewData", ridx);
         alert("후기가 삭제되었습니다.");
-        this.$store.dispatch(
-          "getMyReviewData",
-          this.$store.state.userInfo.email
-        );
+        this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
+          this.$store.dispatch("getReviewData");
+      
       }
     },
     editHandler(ridx) {
@@ -95,10 +96,8 @@ export default {
           console.log(response);
           alert("후기가 수정 되었습니다.")
           this.editBool = false;
-          this.$store.dispatch(
-          "getMyReviewData",
-          this.$store.state.userInfo.email
-        );
+          this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
+          this.$store.dispatch("getReviewData");
         })
         .catch((err) => {
           console.log(err);
