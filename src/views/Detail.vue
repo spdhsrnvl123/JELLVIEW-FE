@@ -7,7 +7,7 @@
             </div>
             <div class="title">{{ $store.state?.jelly[currentURL.id]?.jname }}</div>
             <div class="contentII">{{ $store.state?.jelly[currentURL.id]?.jdetail }}</div>
-            <Chart />
+            <!-- <Chart /> -->
               <h1>-영양정보 100g당-</h1>
             <div class="nutrition">
               <div>열량 : {{ $store.state?.jelly[currentURL.id]?.jcalorie }}kcal</div>

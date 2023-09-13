@@ -26,6 +26,8 @@ import Nav from "@/components/Nav.vue";
 export default {
   components: { Header, Nav, Balloon, Card },
   created() {
+    // let token = localStorage.getItem("token");
+    // this.$store.dispatch("getUserData",token);
     this.$store.dispatch("getData").then(
       ()=>{
         this.$store.dispatch("getReviewData");

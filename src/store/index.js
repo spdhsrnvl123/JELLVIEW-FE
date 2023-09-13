@@ -53,7 +53,7 @@ export default createStore({
       await axios
         .get("http://localhost:8001/jellies")
         .then((response) => {
-          console.log(response.data.result);
+          // console.log(response.data.result);
           context.commit("setData", response.data.result);
         })
         .catch((error) => {
@@ -73,12 +73,12 @@ export default createStore({
         });
     },
     //나의 리뷰 정보 받아오기
-    getMyReviewData(context,email) {
+    getMyReviewData(context, email) {
       // console.log(email)
       axios
         .get(`http://localhost:8001/review/${email}`)
         .then((response) => {
-          console.log(response.data)
+          // console.log(response.data)
           context.commit("setMyReviewData", response.data);
         })
         .catch((error) => {
@@ -98,13 +98,13 @@ export default createStore({
     },
     // 유저 정보 받아오기
     getUserData(context, token) {
-      console.log(token);
+      // console.log(token);
       axios({
         method: "GET",
         url: `http://localhost:8001/auth/kakao/user?token=${token}`,
       })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           context.dispatch("getMyReviewData",res.data.email);
           context.commit("setUserInfo", res.data);
         })
