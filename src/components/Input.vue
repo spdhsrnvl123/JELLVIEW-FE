@@ -6,7 +6,7 @@
         v-model="data"
         @input="validateInput"
         placeholder="젤리 이름을 입력해주세요~!"
-        maxlength="20"
+        maxlength="100"
       />
       <button type="submit">검색</button>
     </form>

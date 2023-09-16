@@ -9,9 +9,9 @@
   <img class="balloonBundle" src="@/assets/balloon.png" />
   <img class="balloonBundle2" src="@/assets/balloon.png" />
   <div class="mainContent">
-    <ul class="listBox">
+    <ul class="listBox" v-if="reviewget">
       <li v-for="(review, i) in this.$store.state.review" :key="i">
-        <Card :review="review" :jelly2="$store.state.jelly" />
+        <Card :review="review" />
       </li>
     </ul>
   </div>
@@ -25,12 +25,19 @@ import Nav from "@/components/Nav.vue";
 
 export default {
   components: { Header, Nav, Balloon, Card },
+  data() {
+    return{
+      reviewget: false
+    }
+  },
   created() {
     // let token = localStorage.getItem("token");
     // this.$store.dispatch("getUserData",token);
     this.$store.dispatch("getData").then(
       ()=>{
-        this.$store.dispatch("getReviewData");
+        this.$store.dispatch("getReviewData").then(()=>{
+          this.reviewget = true;
+        });
       }
     );
   },

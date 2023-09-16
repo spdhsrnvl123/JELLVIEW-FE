@@ -11,14 +11,6 @@
         <!-- <select v-model="jidx" @change="urlchange"> -->
         <select v-model="jidx" @change="urlchange">
           <option v-for="a in $store.state.jelly" :value="a.jidx" :key="a">{{ a.jname }}</option>
-          <!-- <option value=101>골드베렌</option>
-          <option value=102>스타믹스</option>
-          <option value=103>해피콜라</option>
-          <option value=104>웜스</option>
-          <option value=105>부시</option>
-          <option value=106>웜스 자우어</option>
-          <option value=107>해피콜라 자우어</option>
-          <option value=108>해피콜라 그랩스</option> -->
         </select>
         <span>별점선택</span>
         <select v-model="star">
@@ -68,7 +60,6 @@ export default {
   },
   methods: {
     dataSubmit(e) {
-      console.log(1)
       axios
         .post("http://localhost:8001/save", {
             title : this.title,
