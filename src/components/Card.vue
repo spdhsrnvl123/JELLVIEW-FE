@@ -71,6 +71,7 @@ export default {
       let a = this.$store.state?.jelly.filter((v)=>{
       return this.review.jidx == v.jidx
     });
+    console.log(a[0].jname)
     this.name = a[0]?.jname;
   },
   methods: {
@@ -78,9 +79,9 @@ export default {
       if (confirm("작성한 후기를 삭제하시겠습니까?")) {
         this.$store.dispatch("deleteReviewData", ridx);
         alert("후기가 삭제되었습니다.");
-        this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
-          this.$store.dispatch("getReviewData");
-      
+        // this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
+          // this.$store.dispatch("getReviewData");
+      location.reload();
       }
     },
     editHandler(ridx) {
