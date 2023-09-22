@@ -13,8 +13,9 @@
     </div>
     <!-- {{ review }} -->
     <div>선택한 상품 : {{ name }}</div>
+    <img class="productImg" :src="image" />
     <div class="writeDate">작성날짜 : {{ review.created_at.slice(0, 10) }}</div>
-
+    <div class="writeDate2">수정한 날짜 : 작성예정</div>
     <h1>
       제목 :
       <span v-if="editBool == false">{{ review.title }}</span>
@@ -58,7 +59,8 @@ export default {
       content: this.review.content,
       star: this.review.star,
       jellyReview : [],
-      name : ''
+      name : '',
+      image : ''
     };
   },
   props: {
@@ -73,6 +75,13 @@ export default {
     });
     console.log(a[0].jname)
     this.name = a[0]?.jname;
+
+    //작성한 후기와 젤리정보를 비교하여 작성한 상품 후기에 대한 이미지 출력
+    let imgFilter = this.$store.state.jelly.filter((v)=>{
+      return v.jidx == this.review.jidx;
+    })
+    this.image = imgFilter[0].jimg;
+
   },
   methods: {
     deleteHander(ridx) {
@@ -106,7 +115,7 @@ export default {
     },
   },
 };
-</script>
+</script>``
 
 <style scoped>
 .cardBox {
@@ -117,7 +126,7 @@ export default {
   box-sizing: border-box;
   border-radius: 30px;
   font-size: 2.3vw;
-  background: #fff4e6;
+  background: linear-gradient(180deg, #E6E5FF 0%, #FFF 100%);
   margin-bottom: 10px;
   overflow: scroll;
   position: relative;
@@ -174,9 +183,21 @@ textarea {
   outline: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.productImg{
+  width: 12vw;
+}
 .writeDate{
   position: absolute;
   top:0%;
+  right:-1%;
+  background: #ffffff;
+  padding: 10px 20px;
+  border-bottom-left-radius: 30px;
+}
+.writeDate2{
+  position: absolute;
+  top:8%;
   right:-1%;
   background: #ffffff;
   padding: 10px 20px;
