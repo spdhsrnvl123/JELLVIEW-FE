@@ -5,6 +5,8 @@
             <div class="imgBox">
                 <img :src="$store.state?.jelly[currentURL.id]?.jimg" />
             </div>
+              {{ jellyGet }}
+
             <div class="title">{{ $store.state?.jelly[currentURL.id]?.jname }}</div>
             <div class="contentII">{{ $store.state?.jelly[currentURL.id]?.jdetail }}</div>
             <!-- <Chart /> -->
@@ -22,7 +24,6 @@
           </div>
           <button @click="closeModal" class="modalButton">&times;</button>
         </section>
-        
       </div>
 </template>
 
@@ -48,6 +49,9 @@ export default {
         currentURL() {
             return this.$route.params;
         },
+        jellyGet(){
+          return this.$store.state.jelly
+        }
     },
     created() {
         this.$store.dispatch('getData');

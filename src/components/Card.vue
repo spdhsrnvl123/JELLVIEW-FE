@@ -14,8 +14,9 @@
     <!-- {{ review }} -->
     <div>선택한 상품 : {{ name }}</div>
     <img class="productImg" :src="image" />
-    <div class="writeDate">작성날짜 : {{ review.created_at.slice(0, 10) }}</div>
-    <div class="writeDate2">수정한 날짜 : 작성예정</div>
+    <div class="writeDate">작성날짜 : {{ review.created_at.slice(0, 10) }}<br />
+      <div>수정한 날짜 : 작성예정</div>
+    </div>
     <h1>
       제목 :
       <span v-if="editBool == false">{{ review.title }}</span>
@@ -73,14 +74,13 @@ export default {
       let a = this.$store.state?.jelly.filter((v)=>{
       return this.review.jidx == v.jidx
     });
-    console.log(a[0].jname)
     this.name = a[0]?.jname;
 
     //작성한 후기와 젤리정보를 비교하여 작성한 상품 후기에 대한 이미지 출력
     let imgFilter = this.$store.state.jelly.filter((v)=>{
       return v.jidx == this.review.jidx;
     })
-    this.image = imgFilter[0].jimg;
+    this.image = imgFilter[0]?.jimg;
 
   },
   methods: {

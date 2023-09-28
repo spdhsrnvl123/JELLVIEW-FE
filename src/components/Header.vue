@@ -1,6 +1,6 @@
 <template>
   <div class="container2">
-  <img src="../assets/haribo.png" />
+  <!-- <img src="../assets/haribo.png" /> -->
     <Logo />
   </div>
 </template>

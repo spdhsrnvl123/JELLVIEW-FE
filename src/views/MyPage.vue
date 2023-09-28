@@ -1,5 +1,4 @@
 <template>
-  <!-- <Balloon /> -->
   <div class="logoBox">
     <Logo />
   </div>
@@ -18,14 +17,21 @@
 import Balloon from "@/components/Balloon.vue";
 import LoginButton from "@/components/LoginButton.vue";
 import Logo from "@/components/Logo.vue";
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       obj: {},
+      users : []
     };
   },
   created() {
-    //로그인 하지 않은 사용자가 URL로 다이렉트 접근 방지
+    // console.log(this)
+    // fetchNewsList().then((response)=>{
+    //   console.log(response)
+    // })
+        //로그인 하지 않은 사용자가 URL로 다이렉트 접근 방지
     if (localStorage.getItem("token") == undefined) {
       this.$router.push("/home");
     }
@@ -78,7 +84,6 @@ export default {
   transform: translate(-50%, -50%);
 }
 .buttonBox button {
-  background: #f7fef7;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
   border: 0;

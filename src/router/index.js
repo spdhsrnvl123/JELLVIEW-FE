@@ -40,9 +40,12 @@ const routes = [
   {
     path: "/auth/kakao/callback",
     name: "KakaoRedirect",
+    // redirect : '/mypage',
     component: () => import("../views/KakaoRedirect.vue"),
   },
 ];
+
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

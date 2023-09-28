@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "balloon",
+  name: "풍선 애니메이션",
 };
 </script>
 

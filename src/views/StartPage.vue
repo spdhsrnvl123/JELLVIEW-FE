@@ -12,7 +12,7 @@
         <img src="@/assets/balloonGreen.png" alt="초록생풍선" />
         <img src="@/assets/balloonRed.png" alt="빨간충선" />
       </div>
-      <button @click="$router.push('/home')">JellFo 시작하기</button>
+      <button @click="$router.push('/home')">JView 시작하기</button>
         <img class="balloonBundle" src="@/assets/balloon.png" />
     </div>
   </div>

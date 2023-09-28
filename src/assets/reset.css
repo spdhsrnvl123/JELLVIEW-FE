@@ -30,7 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  background-color: #F4E6D0;
+  background: radial-gradient(50% 50% at 50% 50%, #FFF 69.79%, #3EF3FF 100%);
   /* background-color: black; */
 }
 ol, ul {

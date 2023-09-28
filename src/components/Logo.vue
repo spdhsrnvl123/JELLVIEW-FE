@@ -51,7 +51,7 @@ font: 16vw/0.65 "Dongle", "Kaushan Script", Futura, "Roboto", "Trebuchet MS", He
 }
 
 .layer:after {
-  content: "JellFo";
+  content: "JView";
   white-space: pre;
   text-align: center;
   height: 100%;
