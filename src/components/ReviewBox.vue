@@ -1,0 +1,107 @@
+<template>
+  <Header />
+  <div class="reviewTop">
+    <button @click="$router.push('/review')" class="reviewText">
+      전체 리뷰
+    </button>
+    <button @click="useAuth('/myreview')" class="reviewText">나의 리뷰</button>
+  </div>
+  <img class="balloonBundle" src="@/assets/balloon.png" />
+  <img class="balloonBundle2" src="@/assets/balloon.png" />
+  <div class="mainContent">
+    <!-- <ul class="listBox" v-if="reviewget"> -->
+    <ul class="listBox">
+      <li v-for="(review, i) in listItems" :key="i">
+        <Card :review="review" />
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import Balloon from "@/components/Balloon.vue";
+import Card from "@/components/Card.vue";
+import Header from "@/components/Header.vue";
+import Nav from "@/components/Nav.vue";
+
+export default {
+  components: { Header, Nav, Balloon, Card },
+  data() {
+    return{
+      reviewget: false
+    }
+  },
+  computed : {
+    listItems(){
+      const name = this.$route.name;
+      if(name == 'ReviewPage'){
+        return this.$store.state.review;
+      }
+    }
+  }
+
+  // methods: {
+  //   useAuth(path) {
+  //     if (localStorage.getItem("token")) {
+  //       this.$router.push(path);
+  //     } else {
+  //       alert("로그인해주세요!");
+  //     }
+  //   },
+  // },
+};
+</script>
+
+
+<style scoped>
+.mainContent {
+  /* height: 52.4vh; */
+  width: 59%;
+  margin: 0 auto;
+  padding: 10px;
+}
+.reviewTop {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  margin: 10px auto;
+}
+.reviewText {
+  font-size: 4vw;
+  background: transparent;
+  font-weight: 600;
+  padding: 1px 14px;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
+  border: 0;
+  cursor: pointer;
+  transition: all 0.1s;
+  margin: 10px;
+}
+.reviewText:hover {
+  transform: scale(1.2);
+}
+.listBox {
+  margin-right: 29px;
+  width: 100%;
+}
+
+.balloonBundle {
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  width: 40%;
+  height: 40%;
+  right: 0%;
+  animation: move 3s linear infinite alternate;
+}
+.balloonBundle2 {
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  width: 40%;
+  height: 40%;
+  left: 0%;
+  animation: move 3s linear infinite alternate;
+}
+</style>
+
