@@ -1,12 +1,11 @@
+import { fetchJellies, fetchMyReview, fetchReview } from "@/api";
 import axios from "axios";
 
 export default {
   //젤리 정보 받아오기
-  async getData(context) {
-    await axios
-      .get("http://localhost:8001/jellies")
+  FETCH_JELLIES(context) {
+    fetchJellies()
       .then((response) => {
-        // console.log(response.data.result);
         context.commit("setData", response.data.result);
       })
       .catch((error) => {
@@ -14,11 +13,9 @@ export default {
       });
   },
   //리뷰 정보 받아오기
-  async getReviewData(context) {
-    await axios
-      .get("http://localhost:8001/review")
+  FETCH_REVIEW(context) {
+    fetchReview()
       .then((response) => {
-        // console.log(response.data)
         context.commit("setReviewData", response.data);
       })
       .catch((error) => {
@@ -27,11 +24,8 @@ export default {
   },
   //나의 리뷰 정보 받아오기
   getMyReviewData(context, email) {
-    // console.log(email)
-    axios
-      .get(`http://localhost:8001/review/${email}`)
+      fetchMyReview(email)
       .then((response) => {
-        // console.log(response.data)
         context.commit("setMyReviewData", response.data);
       })
       .catch((error) => {

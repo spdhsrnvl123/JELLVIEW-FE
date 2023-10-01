@@ -69,7 +69,7 @@ export default {
     bool: Boolean,
   },
   created(){
-        let token = localStorage.getItem("token");
+    let token = localStorage.getItem("token");
     this.$store.dispatch("getUserData", token);
       let a = this.$store.state?.jelly.filter((v)=>{
       return this.review.jidx == v.jidx
@@ -88,8 +88,6 @@ export default {
       if (confirm("작성한 후기를 삭제하시겠습니까?")) {
         this.$store.dispatch("deleteReviewData", ridx);
         alert("후기가 삭제되었습니다.");
-        // this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
-          // this.$store.dispatch("getReviewData");
       location.reload();
       }
     },
@@ -107,7 +105,7 @@ export default {
           alert("후기가 수정 되었습니다.")
           this.editBool = false;
           this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
-          this.$store.dispatch("getReviewData");
+          this.$store.dispatch("FETCH_REVIEW");
         })
         .catch((err) => {
           console.log(err);

@@ -28,7 +28,7 @@ export default {
 		}
 	},
 	created(){
-	    this.$store.dispatch('getData');
+	    this.$store.dispatch('FETCH_JELLIES');
 	},
 	components : {
     LoginButton: LoginButton,

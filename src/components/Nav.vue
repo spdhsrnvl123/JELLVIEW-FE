@@ -1,8 +1,8 @@
 <template>
   <ul class="menuBox">
     <li @click="$router.push('/home')">홈</li>
-    <li @click="$router.push('/reviewlist')">리뷰 보기</li>
-    <li @click="useAuth('/review')">리뷰 작성하기</li>
+    <li @click="$router.push('/review')">리뷰 보기</li>
+    <li @click="useAuth('/register')">리뷰 작성하기</li>
     <li @click="useAuth('/mypage')">마이페이지</li>
   </ul>
 </template>

@@ -1,10 +1,10 @@
 <template>
-      <img src="../assets/haribo.png" />
+  <img src="../assets/haribo.png" />
 </template>
 
 <script>
 export default {
-    name : 'Haribo'
+  name : 'Haribo'
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
-  <Header />
+  <!-- <Header />
   <div class="reviewTop">
-    <button @click="$router.push('/reviewlist')" class="reviewText">
+    <button @click="$router.push('/review')" class="reviewText">
       전체 리뷰
     </button>
     <button @click="useAuth('/myreview')" class="reviewText">나의 리뷰</button>
@@ -9,48 +9,42 @@
   <img class="balloonBundle" src="@/assets/balloon.png" />
   <img class="balloonBundle2" src="@/assets/balloon.png" />
   <div class="mainContent">
-    <ul class="listBox" v-if="reviewget">
-      <li v-for="(review, i) in this.$store.state.review" :key="i">
-        <Card :review="review" />
+    <ul class="listBox">
+      <li v-for="(review, i) in $store.state.myReview" :key="i">
+        <Card :review="review" :bool="bool"  />
       </li>
     </ul>
-  </div>
+  </div> -->
 </template>
 
 <script>
-import Balloon from "@/components/Balloon.vue";
-import Card from "@/components/Card.vue";
-import Header from "@/components/Header.vue";
-import Nav from "@/components/Nav.vue";
+// import Balloon from "@/components/Balloon.vue";
+// import Card from "@/components/Card.vue";
+// import Header from "@/components/Header.vue";
+// import Nav from "@/components/Nav.vue";
 
-export default {
-  components: { Header, Nav, Balloon, Card },
-  data() {
-    return{
-      reviewget: false
-    }
-  },
-  created() {
-    // let token = localStorage.getItem("token");
-    // this.$store.dispatch("getUserData",token);
-    this.$store.dispatch("getData").then(
-      ()=>{
-        this.$store.dispatch("getReviewData").then(()=>{
-          this.reviewget = true;
-        });
-      }
-    );
-  },
-  methods: {
-    useAuth(path) {
-      if (localStorage.getItem("token")) {
-        this.$router.push(path);
-      } else {
-        alert("로그인해주세요!");
-      }
-    },
-  },
-};
+// export default {
+//   components: { Header, Nav, Balloon, Card },
+//   data(){
+//     return{
+//       bool : true,
+//     }
+//   },
+//   created() {
+//     let token = localStorage.getItem("token");
+//     this.$store.dispatch("getUserData",token);
+//     this.$store.dispatch("getData"); 
+//   },
+//   methods: {
+//     useAuth(path) {
+//       if (localStorage.getItem("token")) {
+//         this.$router.push(path);
+//       } else {
+//         alert("로그인해주세요!");
+//       }
+//     },
+//   },
+// };
 </script>
 
 <style scoped>

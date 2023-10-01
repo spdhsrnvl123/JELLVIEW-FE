@@ -1,47 +1,45 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/StartPage.vue'
 
 const routes = [
   {
     path: "/",
     name: "StartPage",
-    component: HomeView,
+    component: ()=> import("@/pages/StartPage.vue")
   },
   {
     path: "/home",
-    name: "Home",
-    component: () => import(/* webpackChunkName: "user" */ "../views/Home.vue"),
+    name: "HomePage",
+    component: () => import("@/pages/HomePage.vue"),
   },
   {
     path: "/detail/:id",
-    name: "Detail",
-    component: () => import("../views/Detail.vue"),
+    name: "DetailPage",
+    component: () => import("@/pages/DetailPage.vue"),
+  },
+  {
+    path: "/register",
+    name: "RegisterPage",
+    component: () => import("@/pages/RegisterPage.vue"),
   },
   {
     path: "/review",
-    name: "Review",
-    component: () => import("../views/Review.vue"),
-  },
-  {
-    path: "/reviewlist",
-    name: "ReviewList",
-    component: () => import("../views/ReviewList.vue"),
+    name: "ReviewPage",
+    component: () => import("@/pages/ReviewPage.vue"),
   },
   {
     path: "/myreview",
-    name: "MyReview",
-    component: () => import("../views/MyReview.vue"),
+    name: "MyReviewPage",
+    component: () => import("@/pages/MyReviewPage.vue"),
   },
   {
     path: "/mypage",
     name: "MyPage",
-    component: () => import("../views/MyPage.vue"),
+    component: () => import("@/pages/MyPage.vue"),
   },
   {
     path: "/auth/kakao/callback",
     name: "KakaoRedirect",
-    // redirect : '/mypage',
-    component: () => import("../views/KakaoRedirect.vue"),
+    component: () => import("@/pages/KakaoRedirect.vue"),
   },
 ];
 
