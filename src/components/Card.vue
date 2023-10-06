@@ -1,154 +1,168 @@
 <template>
+    <img class="productImg" :src="selected_product.jimg" />
+  <div class="date">작성날짜 : {{ review.created_at.slice(0, 10) }}</div>
   <div class="cardBox">
     <div>
-      Star :
-      <span v-if="editBool == false">{{ review.star }}</span>
-      <select v-if="editBool == true" v-model="star">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+    <div v-if="editBool == false" class="starBox">
+    <span class="star">별점 :</span>
+    <!-- start - 별점라인-->
+    <div class="star-rating">
+      <div v-for="index in 5" :key="index">
+        <img
+          v-if="index < score + 1"
+          style="width: 3vw"
+          src="../assets/star2.png"
+        />
+        <img
+          v-if="index > score"
+          style="width: 3vw"
+          src="../assets/star1.png"
+        />
+      </div>
     </div>
-    <!-- {{ review }} -->
-    <div>선택한 상품 : {{ name }}</div>
-    <img class="productImg" :src="image" />
-    <div class="writeDate">작성날짜 : {{ review.created_at.slice(0, 10) }}<br />
-      <div>수정한 날짜 : 작성예정</div>
+      <!-- end -->
     </div>
+      <Star :currentScore="score" v-if="editBool == true" @point="handlePointEvent" />
+    </div>
+    <div>선택한 상품 : {{ selected_product.jname }}</div>
+    <div class="write">작성자 : {{ review.email }}</div>
     <h1>
       제목 :
       <span v-if="editBool == false">{{ review.title }}</span>
       <input
         v-if="editBool == true"
+        v-model = "review.title"
         type="text"
         placeholder="제목을 입력해주세요!"
-        v-model="title"
       />
     </h1>
-    <h1 class="content">
+    <div class="content">
       내용 :
       <span v-if="editBool == false">{{ review.content }}</span>
       <textarea
         v-if="editBool == true"
-        v-model="content"
+        v-model="review.content"
         maxlength="300"
         placeholder="내용을 입력해주세요!"
       />
-    </h1>
-    <h1 class="content">작성자 : {{ review.email }}</h1>
-    <!-- {{ $store.state.userInfo.email }} -->
- <div class="buttonBox" v-if="$store.state.userInfo.email == review.email">
-      <button v-if="editBool == false" @click="editBool = true">수정</button>
-      <button v-if="editBool == true" @click="editHandler(review.ridx)">수정완료</button>
-      <button v-if="editBool == false" @click="deleteHander(review.ridx)">삭제</button>
-      <button v-if="editBool == true" @click="editBool = false">수정취소</button>
     </div>
   </div>
+      <div class="buttonBox" v-if="$store.state.userInfo.email == review.email">
+        <button v-if="editBool == false" @click="editBool = true">수정</button>
+        <button v-if="editBool == true" @click="editHandler(review.ridx)">
+          수정완료
+        </button>
+        <button v-if="editBool == false" @click="deleteHander(review.ridx)">
+          삭제
+        </button>
+        <button v-if="editBool == true" @click="editBool = false">
+          수정취소
+        </button>
+    </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
+import Star from "@/components/Star.vue"
 
 export default {
   name: "card",
   data() {
     return {
       editBool: false,
-      title: this.review.title,
-      content: this.review.content,
-      star: this.review.star,
-      jellyReview : [],
-      name : '',
-      image : ''
+      selected_product : {},
+      score : this.review.star,
     };
+  },
+  components : {
+    Star
   },
   props: {
     review: Object,
-    bool: Boolean,
   },
-  created(){
+  created() {
     let token = localStorage.getItem("token");
-    this.$store.dispatch("getUserData", token);
-      let a = this.$store.state?.jelly.filter((v)=>{
-      return this.review.jidx == v.jidx
-    });
-    this.name = a[0]?.jname;
+    //토큰이 있을 경우에만 유저정보 가져오기
+    if (token) {
+      this.$store.dispatch("getUserData", token)
 
-    //작성한 후기와 젤리정보를 비교하여 작성한 상품 후기에 대한 이미지 출력
-    let imgFilter = this.$store.state.jelly.filter((v)=>{
-      return v.jidx == this.review.jidx;
-    })
-    this.image = imgFilter[0]?.jimg;
-
+      //작성한 리뷰의 상품에 대해서 일치하는 상품 필터링(이름, 이미지)
+      let product = this.$store.state.jelly.filter((v) => {
+        return this.review.jidx == v.jidx;
+      });
+      this.selected_product = product[0];
+    }
   },
   methods: {
     deleteHander(ridx) {
       if (confirm("작성한 후기를 삭제하시겠습니까?")) {
         this.$store.dispatch("deleteReviewData", ridx);
         alert("후기가 삭제되었습니다.");
-      location.reload();
+        location.reload();
       }
     },
     editHandler(ridx) {
-      console.log(ridx);
       axios
         .post("http://localhost:8001/editById", {
-            title : this.title,
-            content : this.content,
-            star : this.star,
-            ridx : ridx
+          title: this.review.title,
+          content: this.review.content,
+          star: this.score,
+          ridx: ridx,
         })
         .then((response) => {
           console.log(response);
-          alert("후기가 수정 되었습니다.")
+          alert("후기가 수정 되었습니다.");
           this.editBool = false;
-          this.$store.dispatch("getMyReviewData",this.$store.state.userInfo.email);
+          this.$store.dispatch(
+            "FETCH_MYREVIEW",
+            this.$store.state.userInfo.email
+          );
           this.$store.dispatch("FETCH_REVIEW");
         })
         .catch((err) => {
           console.log(err);
         });
     },
+        handlePointEvent(e){
+          this.score = e
+    },
   },
 };
-</script>``
+</script>
 
 <style scoped>
 .cardBox {
-  align-items: center;
-  height: 30%;
+  position: relative;
+  left: 9%;
   padding: 18px 20px;
   box-shadow: -1px 2px 5px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
   border-radius: 30px;
   font-size: 2.3vw;
-  background: linear-gradient(180deg, #E6E5FF 0%, #FFF 100%);
+  height: 7.5em;
+  background: linear-gradient(180deg, #e6e5ff 0%, #fff 100%);
   margin-bottom: 10px;
-  overflow: scroll;
-  position: relative;
+  overflow-y: auto;
 }
 
 .listBox h1 {
   font-size: 3.4vw;
   margin-bottom: 10px;
 }
-.buttonBox {
+.buttonBox{
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .buttonBox button {
-  font-size: 2.5vw;
+  font-size: 3.3vw;
   background: #16f916;
-  font-weight: 600;
-  padding: 1px 14px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
+  font-weight: 700;
   border: 0;
   cursor: pointer;
   transition: all 0.1s;
-  margin: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin-right: 10px;
+  width:14%;
+  border-radius: 6px;
 }
 
 .listBox select {
@@ -171,7 +185,7 @@ input {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 textarea {
-  width: 60%;
+  width: 80%;
   vertical-align: top;
   background: #ffffff;
   border-radius: 30px;
@@ -182,23 +196,41 @@ textarea {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.productImg{
-  width: 12vw;
-}
-.writeDate{
+.productImg {
   position: absolute;
-  top:0%;
-  right:-1%;
-  background: #ffffff;
-  padding: 10px 20px;
-  border-bottom-left-radius: 30px;
+  z-index: 99;
+  transform: translate(-57%,13%);
+  width: 15vw;
 }
-.writeDate2{
+.write {
   position: absolute;
-  top:8%;
-  right:-1%;
+  top: -0.1%;
+  right: 0%;
   background: #ffffff;
-  padding: 10px 20px;
+  padding: 10px 17px;
+  font-weight: bold;
   border-bottom-left-radius: 30px;
+  border-top-right-radius: 30px;
 }
+.content {
+  font-size: 1em;
+  width: 80%;
+}
+.date {
+  text-align: center;
+  font-size: 2vw;
+  margin: 10px;
+}
+.star-rating {
+  display: flex;
+}
+.star {
+  font-size: 3vw;
+  padding-right: 10px;
+}
+.starBox{
+  display: flex;
+  align-content: center;
+}
+
 </style>
