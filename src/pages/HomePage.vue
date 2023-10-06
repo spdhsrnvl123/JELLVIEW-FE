@@ -1,25 +1,28 @@
 <template>
-	<div class="container">	
-		<Header />
+	<div class="container">
+		<div class="titleBox">
+		<Title :size="10" />
+		</div>
 		<Nav />
 		<Input />
 		<ListBox /> 
-		<LoginButton @openModal = "modalStatus = true" />
+		<Button @openModal = "modalStatus = true" />
 		<transition name="fade">
-			<LoginModal @closeModal = "modalStatus = false" :modalStatus="modalStatus" />
+			<Modal @closeModal = "modalStatus = false" :modalStatus="modalStatus" />
 		</transition>
 		<Balloon />
 	</div>
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
 import ListBox from "@/components/ListBox.vue";
-import LoginButton from "@/components/LoginButton.vue";
-import LoginModal from "@/components/LoginModal.vue";
+import Button from "@/components/Button.vue";
+import Modal from "@/components/Modal.vue";
 import Nav from "@/components/Nav.vue"
 import Input from "@/components/Input.vue"
 import Balloon from "@/components/Balloon.vue"
+import Title from "@/components/Title.vue"
+import Haribo from '@/components/Haribo.vue';
 
 export default {
 	data(){
@@ -31,18 +34,22 @@ export default {
 	    this.$store.dispatch('FETCH_JELLIES');
 	},
 	components : {
-    LoginButton: LoginButton,
-    LoginModal: LoginModal,
-    Header: Header,
-	ListBox : ListBox,
-	Nav : Nav,
-	Input : Input,
-	Balloon : Balloon
+    Button,
+    Modal,
+	ListBox,
+	Nav,
+	Input,
+	Balloon,
+	Title,
+	Haribo
 	}
 }
 </script>
 
 <style scoped>
+.titleBox{
+	margin-top : 40px;
+}
 .container{
   display: flex;
   flex-direction: column;
