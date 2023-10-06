@@ -1,50 +1,29 @@
 <template>
-  <!-- <Header />
-  <div class="reviewTop">
-    <button @click="$router.push('/review')" class="reviewText">
-      전체 리뷰
-    </button>
-    <button @click="useAuth('/myreview')" class="reviewText">나의 리뷰</button>
-  </div>
-  <img class="balloonBundle" src="@/assets/balloon.png" />
-  <img class="balloonBundle2" src="@/assets/balloon.png" />
-  <div class="mainContent">
-    <ul class="listBox">
-      <li v-for="(review, i) in $store.state.myReview" :key="i">
-        <Card :review="review" :bool="bool"  />
-      </li>
-    </ul>
-  </div> -->
+  <ReviewBox />
 </template>
 
 <script>
-// import Balloon from "@/components/Balloon.vue";
-// import Card from "@/components/Card.vue";
-// import Header from "@/components/Header.vue";
-// import Nav from "@/components/Nav.vue";
+import Balloon from "@/components/Balloon.vue";
+import Card from "@/components/Card.vue";
+import Nav from "@/components/Nav.vue";
+import ReviewBox from '@/components/ReviewBox.vue';
 
-// export default {
-//   components: { Header, Nav, Balloon, Card },
-//   data(){
-//     return{
-//       bool : true,
-//     }
-//   },
-//   created() {
-//     let token = localStorage.getItem("token");
-//     this.$store.dispatch("getUserData",token);
-//     this.$store.dispatch("getData"); 
-//   },
-//   methods: {
-//     useAuth(path) {
-//       if (localStorage.getItem("token")) {
-//         this.$router.push(path);
-//       } else {
-//         alert("로그인해주세요!");
-//       }
-//     },
-//   },
-// };
+export default {
+  components: {  Nav, Balloon, Card, ReviewBox },
+  data(){
+    return{
+      bool : true,
+    }
+  },
+  created() {
+    let token = localStorage.getItem("token");
+    console.log(token)
+    this.$store.dispatch("getUserData",token);
+    this.$store.dispatch("FETCH_JELLIES").then(()=>{
+      this.$store.dispatch("FETCH_REVIEW")
+    })
+  },
+};
 </script>
 
 <style scoped>
@@ -67,17 +46,13 @@
   background: transparent;
   font-weight: 600;
   padding: 1px 14px;
-  /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
-  /* border-radius: 50px; */
   text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
   border: 0;
   cursor: pointer;
   transition: all 0.1s;
   margin: 10px;
 }
-/* .reviewText:nth-child(1) {
-  color: rgb(109, 109, 206);
-} */
+
 .reviewText:hover {
   transform: scale(1.2);
 }
