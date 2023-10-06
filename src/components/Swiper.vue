@@ -125,9 +125,8 @@ export default {
   padding: 2px 5px;
 }
 .cardContent button:hover {
-  transform: scale(1.2);
-  background: black;
-  color: white;
+  transform: scale(1.3);
+  font-size: 1.4vw;
 }
 .cardContent h1 {
   font-size: 1.7vw;

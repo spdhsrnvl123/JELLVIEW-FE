@@ -10,8 +10,11 @@ export default {
 
 <style scoped>
   img{
-    width: 26vw;
-    height : 26vw;
+    position: absolute;
+    top:3%;
+    left:1%;
+    width: 10vw;
+    height : 10vw;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   }
 </style>

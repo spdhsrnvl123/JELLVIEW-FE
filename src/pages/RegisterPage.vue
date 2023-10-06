@@ -1,20 +1,13 @@
 <template>
   <Balloon />
-  <div class="headerBox">
-    <Header />
+  <div class="TitleBox">
+    <Title :size="7" />
   </div>
   <div class="container">
     <div class="reviewWrite">리뷰 작성하기</div>
     <form v-on:submit.prevent="dataSubmit">
-        <h1>별점 선택</h1>
-        <div class="inner">
-          <div class="star-rating">
-            <div class="star" v-for="index in 5" :key="index" @click="check(index)">
-              <img v-if="index > score" style="width:5vw" src="../assets/star1.png" />   
-              <img v-if="index < score+1" style="width:5vw" src="../assets/star2.png" /> 
-            </div>
-          </div>
-        </div>
+      <h2>별점을 입력해주세요!</h2>
+        <Star @point="handlePointEvent" />
       <div class="topBox">
         <input v-model="title" type="text" placeholder="제목을 입력해주세요!" required />
         <span>젤리선택</span>
@@ -37,13 +30,13 @@
 
 <script>
 import Balloon from "@/components/Balloon.vue";
-import Header from "@/components/Header.vue";
 import Nav from "@/components/Nav.vue";
 import Star from "@/components/Star.vue";
 import axios from "axios";
+import Title from '@/components/Title.vue';
 
 export default {
-  components: { Header, Balloon, Nav, Nav, Star },
+  components: { Balloon, Nav, Star, Title },
   data() {
     return {
       title: "",
@@ -66,8 +59,8 @@ export default {
     });
   },
   methods: {
-        check(index) {
-      this.score = index;
+    handlePointEvent(e){
+      this.score = e;
     },
     dataSubmit(e) {
       axios
@@ -80,7 +73,10 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          this.$router.push("/reviewlist");
+          return this.$store.dispatch("FETCH_REVIEW")
+        })
+        .then(()=>{
+          this.$router.push("/review")
         })
         .catch((err) => {
           console.log(err);
@@ -90,10 +86,11 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-h1{
-    font-size: 4vw;
+h2{
+  font-size: 3vw;
+  /* padding: 4px; */
+  padding-bottom: 6px;
 }
 .star-rating{
     display: flex;
@@ -102,14 +99,14 @@ h1{
     font-size: 4vw;
 }
 .reviewWrite {
-  font-size: 7vw;
+  font-size: 7.3vw;
   text-align: center;
   text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
 }
-.headerBox {
+.TitleBox {
   position: absolute;
-  top: -3%;
-  left: 4%;
+  top:3%;
+  left:2%;
 }
 .topBox {
   display: flex;
@@ -158,7 +155,8 @@ form {
   border-radius: 30px;
   border: 0;
   font-size: 2vw;
-  padding: 0px 20px;
+  text-align: center;
+  padding: 0.05em 0.1em;
   outline: none;
   margin-top: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
