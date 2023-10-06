@@ -4,8 +4,7 @@ import axios from "axios";
 export default {
   //젤리 정보 받아오기
   FETCH_JELLIES(context) {
-    fetchJellies()
-      .then((response) => {
+    return fetchJellies().then((response) => {
         context.commit("setData", response.data.result);
       })
       .catch((error) => {
@@ -14,17 +13,20 @@ export default {
   },
   //리뷰 정보 받아오기
   FETCH_REVIEW(context) {
-    fetchReview()
+    return fetchReview()
       .then((response) => {
         context.commit("setReviewData", response.data);
+        // console.log(response)
+        return "리뷰 정보 받아오기 성공하였습니다."
       })
       .catch((error) => {
         console.log(error);
       });
   },
+
   //나의 리뷰 정보 받아오기
-  getMyReviewData(context, email) {
-      fetchMyReview(email)
+  FETCH_MYREVIEW(context, email) {
+    fetchMyReview(email)
       .then((response) => {
         context.commit("setMyReviewData", response.data);
       })
@@ -32,6 +34,7 @@ export default {
         console.log(error);
       });
   },
+
   //리뷰 삭제 하기
   deleteReviewData(context, id) {
     axios
@@ -52,7 +55,7 @@ export default {
     })
       .then((res) => {
         // console.log(res.data);
-        context.dispatch("getMyReviewData", res.data.email);
+        context.dispatch("FETCH_MYREVIEW", res.data.email);
         context.commit("setUserInfo", res.data);
       })
       .catch((err) => {
