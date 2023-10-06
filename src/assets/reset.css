@@ -28,10 +28,8 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
-	line-height: 1;
+html {
   background: radial-gradient(50% 50% at 50% 50%, #FFF 69.79%, #3EF3FF 100%);
-  /* background-color: black; */
 }
 ol, ul {
 	list-style: none;

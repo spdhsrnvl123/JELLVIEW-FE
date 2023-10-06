@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { Transition } from 'vue';
 
 export default {
   name: "Input",
@@ -50,6 +49,7 @@ export default {
   display: flex;
   justify-content: center;
   position: relative;
+  padding: 20px;
 }
 .inputBox .lay::before {
   content: "영어말고 한글로 입력해주세유ㅠㅠ";

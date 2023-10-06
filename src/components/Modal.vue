@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "LoginModal",
+  name: "Modal",
   props : {
     modalStatus : Boolean
   },
