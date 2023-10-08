@@ -7,22 +7,38 @@
         </div>
         <div class="prdouctName">
           <span>{{ jellyInfo.jname }}</span>
-          <span>{{`(${jellyInfo.jcalorie}kcal)`}}</span>
+          <span>{{ `(${jellyInfo.jcalorie}kcal)` }}</span>
         </div>
         <div class="contentII">
           {{ jellyInfo.jdetail }}
         </div>
         <h1>-평균 별점-</h1>
+        <!-- start -->
+        <div class="star-rating">
+          <div v-for="index in 5" :key="index">
+            <img
+              v-if="index < score + 1"
+              style="width: 3vw"
+              src="../assets/star2.png"
+            />
+            <img
+              v-if="index > score"
+              style="width: 3vw"
+              src="../assets/star1.png"
+            />
+          </div>
+        </div>
+        <!-- end -->
         <h1>-영양정보 100g당-</h1>
         <div v-if="jellyInfoLoaded">
-        <Chart :jellyInfo="jellyInfo" />
+          <Chart :jellyInfo="jellyInfo" />
         </div>
-          <button
-            @click="useAuth('/register', jellyInfo.jidx)"
-            class="reviewButton"
-          >
-            후기 작성하기
-          </button>
+        <button
+          @click="useAuth('/register', jellyInfo.jidx)"
+          class="reviewButton"
+        >
+          후기 작성하기
+        </button>
       </div>
       <button @click="closeModal" class="modalButton">&times;</button>
     </section>
@@ -31,16 +47,17 @@
 
 <script>
 import Balloon from "@/components/Balloon.vue";
-import Chart from "@/components/Chart.vue"
+import Chart from "@/components/Chart.vue";
 
 export default {
   data() {
     return {
       jellyInfo: {},
-      jellyInfoLoaded : false
+      jellyInfoLoaded: false,
+      score: 1,
     };
   },
-  components: { Balloon,Chart },
+  components: { Balloon, Chart },
   methods: {
     closeModal() {
       this.$router.push("/home");
@@ -56,12 +73,33 @@ export default {
   created() {
     this.$store.dispatch("FETCH_JELLIES").then(() => {
       this.jellyInfo = this.$store.state.jelly[this.$route.params.id];
-      console.log(this.jellyInfo)
       this.jellyInfoLoaded = true;
+      return this.$store.dispatch("FETCH_REVIEW")
+    }).then(()=>{
+      // 평균 별점 구하는 로직
+      // -start-
+      // console.log(this.$store.state.review)
+      let review = this.$store.state.review;
+      console.log(review);
+      let score = review.filter((v,i)=>{
+        return this.jellyInfo.jidx == v.jidx;
+      })
+      let result = 0;
+      for(let i=0;i<score.length;i++){
+        result += score[i].star
+        // console.log(result);
+      }
+      this.score = Math.round(result/score.length)
+      // -end-
+    }).catch((err)=>{
+      console.log(err)
     })
-  },
-  mounted(){
-      console.log(this.jellyInfo)
+
+
+    // this.$store.dispatch("FETCH_REVIEW").then((res)=>{
+    //   console.log(this.$store.state.review);
+    // })
+    // console.log(this.jellyInfo.jidx)
   },
 };
 </script>
@@ -147,11 +185,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.productName span:nth-child(1){
+.productName span:nth-child(1) {
   background: red;
 }
-.prdouctName span:nth-child(2){
-  font-size : 4vw
+.prdouctName span:nth-child(2) {
+  font-size: 4vw;
 }
 .subTitle {
   font-size: 3.5vw;
@@ -173,7 +211,7 @@ export default {
   text-align: center;
   box-shadow: 0px 2px 10px gray;
   margin-bottom: 10%;
-  background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%);
+  background-image: linear-gradient(135deg, #90f7ec 10%, #32ccbc 100%);
 }
 .nutrition :nth-child(1) {
   text-align: center;
@@ -196,5 +234,17 @@ export default {
 }
 .reviewButton:hover {
   background: #7dd081;
+}
+.star-rating {
+  display: flex;
+  justify-content: center;
+}
+.star {
+  font-size: 3vw;
+  padding-right: 10px;
+}
+.starBox {
+  display: flex;
+  align-content: center;
 }
 </style>
