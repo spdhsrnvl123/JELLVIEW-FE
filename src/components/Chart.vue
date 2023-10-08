@@ -1,8 +1,9 @@
 <template>
-  <div id="app">
-    <h1>-맛 평가-</h1>
-    <apexchart :options="chartOptions" :series="series" type="polarArea"></apexchart>
-  </div>
+  <apexchart
+    :options="chartOptions"
+    :series="series"
+    type="polarArea"
+  ></apexchart>
 </template>
 
 <script>
@@ -12,19 +13,34 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
+  props: {
+    jellyInfo : {
+      type : Object,
+    }
+  },
   data() {
     return {
-      series: [14, 23, 21, 17, 15],
+      series: [
+        this.jellyInfo.jprovince,
+        this.jellyInfo.jsaturatedFat,
+        this.jellyInfo.jcarbohydrate,
+        this.jellyInfo.jsugars,
+        this.jellyInfo.jprotein,
+        this.jellyInfo.jsalt
+      ],
       chartOptions: {
         chart: {
-          type: 'polarArea',
+          type: "polarArea",
         },
-        labels: ['단맛', '신맛', '쓴맛', '짠맛', '매운맛',],
+        labels: ["지방", "포화지방", "탄수화물", "당류", "단백질", "나트륨"],
         stroke: {
-          colors: ['#fff'],
+          colors: ["#fff"],
         },
         fill: {
           opacity: 0.8,
+        },
+        legend: {
+          position: "bottom",
         },
         responsive: [
           {
@@ -34,7 +50,7 @@ export default {
                 width: 200,
               },
               legend: {
-                position: 'bottom',
+                position: "bottom",
               },
             },
           },
@@ -46,12 +62,4 @@ export default {
 </script>
 
 <style scoped>
-/* Add any necessary styles here */
-#app h1{
-    font-size: 5vw;
-    text-align: center;
-    padding: 20px;
-  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.15);
-
-}
 </style>
